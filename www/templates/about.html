@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<script>
+		document.title = "{{main_movie.title}}";
+	</script>
+	<div style="margin-top: 30px">
+		{% with movieobj=main_movie %}
+			{% include "tile.html" %}
+		{% endwith %}
+	</div>
+	<br>
+	<h1 align="center" style="margin-top: -5px"><b style="color: black">Similar Movies: </b></h1>
+	{% for sim in similar %}
+		{% with movieobj=sim %}
+			{% include "tile.html" %}
+		{% endwith %}
+		<br>
+	{% endfor %}
+{% endblock %}

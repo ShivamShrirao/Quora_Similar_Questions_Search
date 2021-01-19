@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1><b style="color: black">{{qtype}} Results for {{query}}:</b></h1>
+	{% for doc in res %}
+		{% with hitobj=doc %}
+			{% include "tile.html" %}
+		{% endwith %}
+		<br>
+	{% endfor %}
+{% endblock %}

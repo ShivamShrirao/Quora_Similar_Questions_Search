@@ -1,0 +1,10 @@
+	<div class="row tile">
+		<a href="{{hitobj.url}}">
+			<h1 style="display: inline;"><b><u>{{ hitobj.title }}</u></b></h1>
+		</a>
+		{% if hitobj.score %}
+			(Similarity score: {{"{:.2f}".format(hitobj.score)}})
+		{% endif %}
+		<br>
+		
+	</div>

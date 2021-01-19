@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Average ratings</title>
+</head>
+<body>
+	<h1>Genre v/s movies</h1>
+	<svg id="svg" width="1200" height="300"></svg>
+
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="{{ url_for('static', filename='js/myScript.js')}}"></script>
+
+
+	<h1>years vs earnings</h1>
+	<svg id="svg1" width="3000" height="300"></svg>
+	<script src="{{ url_for('static', filename='js/yearVSearn.js')}}"></script>
+
+	<h1>years vs revenue</h1>
+	<svg id="svg2" width="3000" height="300"></svg>
+	<script src="{{ url_for('static', filename='js/yearVSrevenue.js')}}"></script>
+
+
+	<h1>year v/s No. of movies released</h1>
+	<svg id="svg3" width="3000" height="300"></svg>
+
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="{{ url_for('static', filename='js/yearVSnumbers.js')}}"></script>
+
+
+</body>
+</html>
