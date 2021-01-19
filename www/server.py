@@ -13,7 +13,7 @@ DATASET_DIR = "../quora-question-pairs-dataset/"
 with open (DATASET_DIR + 'corpus_sentences.list', 'rb') as fp:
 	corpus_sentences = pickle.load(fp)
 
-corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')
+corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
 
 model_name = 'quora-distilbert-multilingual'
 model = SentenceTransformer(model_name)
@@ -25,9 +25,9 @@ app = Flask(__name__)
 def index():
 	return render_template("index.html")
 
-def search_question(inp_question, top_k=10):
-	question_embedding = model.encode(inp_question, convert_to_tensor=True)
-	hits = util.semantic_search(question_embedding, corpus_embeddings, top_k=top_k)
+def search_question(inp_question):
+	question_embedding = model.encode(inp_question, convert_to_tensor=True)#.cuda()
+	hits = util.semantic_search(question_embedding, corpus_embeddings)
 	return hits[0]
 
 cache_hits = {}
