@@ -7,10 +7,12 @@ import numpy as np
 import json
 import pickle
 
+DATASET_DIR = "../quora-question-pairs-dataset/"
+
 with open (DATASET_DIR + 'corpus_sentences.list', 'rb') as fp:
     corpus_sentences = pickle.load(fp)
 
-corpus_embeddings = torch.load('../quora-question-pairs-dataset/corpus_embeddings.pt')
+corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')
 
 model_name = 'quora-distilbert-multilingual'
 model = SentenceTransformer(model_name)
