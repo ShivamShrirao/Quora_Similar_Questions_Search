@@ -1,7 +1,3 @@
-.w3-theme {
-    background-color: #16151d !important
-}
-
 .w3-theme-red {
     color: #ffffff !important;
     background-color: #fc3955 !important;
@@ -150,7 +146,7 @@ select:focus {
 }
 
 a {
-    color: #eee;
+    color: #195faa;
     font-size: 14px;
     text-decoration: none;
 }
@@ -380,7 +376,6 @@ body {
     background-repeat: no-repeat;
     background-size: auto;
     background-attachment: fixed;
-    background: url("/static/images/bg.jpg") no-repeat;
 }
 
 #nav-icon1 {
@@ -527,19 +522,16 @@ body {
     padding: 5px;
   }
 
-  .tile {
-    background-color: #ffffffaa;
-    border-radius: 25px;
-    padding-left: 10px;
-    box-shadow: 6px 6px 5px;
-  }
+.tile {
+  background-color: #ffffffaa;
+  border-radius: 25px;
+  padding-left: 10px;
+  box-shadow: 6px 6px 5px;
+}
 
-  .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 
-  span.keys {
-    color:green;
-  }
