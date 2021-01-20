@@ -18,6 +18,12 @@ corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
 model_name = 'quora-distilbert-multilingual'
 model = SentenceTransformer(model_name)
 
+with open ('question_answer.json', 'r') as fp:
+	chatbot_qa = json.load(fp)
+
+cb_questions = list(chatbot_qa.keys())
+qa_embedding = model.encode(cb_questions, show_progress_bar=True, convert_to_tensor=True)#.cuda()
+
 app = Flask(__name__)
 
 
@@ -25,46 +31,72 @@ app = Flask(__name__)
 def index():
 	return render_template("index.html")
 
-def search_question(inp_question):
+def search_question(inp_question, embedding_db):
 	question_embedding = model.encode(inp_question, convert_to_tensor=True)#.cuda()
-	hits = util.semantic_search(question_embedding, corpus_embeddings)
+	hits = util.semantic_search(question_embedding, embedding_db)
 	return hits[0]
 
 cache_hits = {}
 # TODO: Limit cache_hits size.
 def get_resp_dicts(query):
-	res = []
+	resp = []
 	hits = cache_hits.get(query)
 	if hits is None:
-		hits = search_question(query)
+		hits = search_question(query, corpus_embeddings)
 		cache_hits[query] = hits
 	for hit in hits:
-		res.append({
+		resp.append({
 				"value": corpus_sentences[hit['corpus_id']],
-				"score": f"({hit['score']:.3f}) ",
+				"score": f"{hit['score']:.3f}",
 				"url": url_for('about', qid=hit['corpus_id'])
 				})
-	return res
+	return resp
 
 @app.route('/search')
 def search():
 	start_time = time.time()
-	res = []
+	resp = []
 	query = None
 	try:
 		query = request.args['q']
 		if query:
-			res = get_resp_dicts(query)
+			resp = get_resp_dicts(query)
 	except KeyError:
 		pass
 	end_time = time.time()
 	time_taken = end_time-start_time
-	return render_template("search.html", qtype="Search", res=res, query=query, time_taken=f"{time_taken:.4f}")
+	return render_template("search.html", qtype="Search", resp=resp, query=query, time_taken=f"{time_taken:.4f}")
 
 
 @app.route('/about/<qid>')
 def about(qid):
 	return render_template("about.html", main_que=corpus_sentences[qid], similar=similar)
+
+
+@app.route('/chatbot')
+def chatbot():
+	resp = []
+	query = None
+	try:
+		query = request.args['q']
+		if query:
+			hits = search_question(query, qa_embedding)
+			hit = hits[0]  # best response
+			if hit['score'] > 0.90:
+				resp.append({
+						"answer": chatbot_qa[cb_questions[hit['corpus_id']]],
+						"similar": cb_questions[hit['corpus_id']],
+						"score": f"{hit['score']:.3f}",
+						})
+			else:
+				resp.append({
+						"answer": "Sorry, I did not get your question. Can you please be more specific?",
+						"similar": cb_questions[hit['corpus_id']],
+						"score": f"{hit['score']:.3f}",
+						})
+	except KeyError:
+		pass
+	return json.dumps(resp)
 
 
 if __name__ == '__main__':
