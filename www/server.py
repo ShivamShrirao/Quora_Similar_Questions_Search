@@ -48,7 +48,7 @@ def get_resp_dicts(query):
 		resp.append({
 				"value": corpus_sentences[hit['corpus_id']],
 				"score": f"{hit['score']:.3f}",
-				"url": url_for('about', qid=hit['corpus_id'])
+				"url": url_for('view', qid=hit['corpus_id'])
 				})
 	return resp
 
@@ -65,12 +65,21 @@ def search():
 		pass
 	end_time = time.time()
 	time_taken = end_time-start_time
-	return render_template("search.html", qtype="Search", resp=resp, query=query, time_taken=f"{time_taken:.4f}")
+	return render_template("search.html", resp=resp, query=query, time_taken=f"{time_taken:.4f}")
 
 
-@app.route('/about/<qid>')
-def about(qid):
-	return render_template("about.html", main_que=corpus_sentences[qid], similar=similar)
+@app.route('/view/<qid>')
+def view(qid):
+	start_time = time.time()
+	try:
+		query = corpus_sentences[int(qid)]
+		resp = get_resp_dicts(query)
+	except IndexError:
+		query = ""
+		resp = []
+	end_time = time.time()
+	time_taken = end_time-start_time
+	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", view_page=True)	# skip first as it is same as question in db.
 
 
 @app.route('/chatbot')
