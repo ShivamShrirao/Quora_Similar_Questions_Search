@@ -75,25 +75,21 @@ def about(qid):
 
 @app.route('/chatbot')
 def chatbot():
-	resp = []
+	resp = {}
 	query = None
 	try:
 		query = request.args['q']
 		if query:
 			hits = search_question(query, qa_embedding)
 			hit = hits[0]  # best response
+			resp = {
+					"answer": "Sorry, I did not get your question. Can you please be more specific?",
+					"similar": cb_questions[hit['corpus_id']],
+					"score": f"{hit['score']:.3f}",
+					}
 			if hit['score'] > 0.90:
-				resp.append({
-						"answer": chatbot_qa[cb_questions[hit['corpus_id']]],
-						"similar": cb_questions[hit['corpus_id']],
-						"score": f"{hit['score']:.3f}",
-						})
-			else:
-				resp.append({
-						"answer": "Sorry, I did not get your question. Can you please be more specific?",
-						"similar": cb_questions[hit['corpus_id']],
-						"score": f"{hit['score']:.3f}",
-						})
+				resp["answer"] = chatbot_qa[cb_questions[hit['corpus_id']]]
+
 	except KeyError:
 		pass
 	return json.dumps(resp)
