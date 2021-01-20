@@ -1,0 +1,10 @@
+{
+    "What is the forum for?": "This is a forum to answer question related to programming",
+    "Hello": "Hello! How are you today?",
+    "Who are you?": "I am an assistant bot which can answer your questions about this forum",
+    "What is special about this forum?": "The special thing about this forum is that it uses NLP to prevent redundant questions, even if it is in a different language.",
+    "How does the site find similar question?": "We use BERT to compare and find questions that are similar.",
+    "What is BERT?": "Bidirectional Encoder Representations or BERT is a from Transformers is a Transformer-based machine learning technique for natural language processing pre-training developed by Google.",
+    "How can I post questions on this blog?": "You can enter your question in the ask-question box. If a similar question already exist, we will show you the existing questions and promt you again.",
+    "What if my question already exist?": "If your question matches some which already exists on our forum, you will be shown the matching the questions. If your answer is still not available, you can decide and still post your question."
+}

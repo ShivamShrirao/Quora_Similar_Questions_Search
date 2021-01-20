@@ -5,10 +5,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}" />
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/w3.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
   </head>
   <body class="w3-theme">
@@ -91,5 +91,8 @@
         {% endblock %}
       </div>
     </div>
+    <!-- chat bot window -->
+    
+    <!-- chat bot window -->
   </body>
 </html>
