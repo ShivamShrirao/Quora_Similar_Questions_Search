@@ -10,19 +10,29 @@ import time
 
 DATASET_DIR = "../quora-question-pairs-dataset/"
 
+start_time = time.time()
 with open (DATASET_DIR + 'corpus_sentences.list', 'rb') as fp:
 	corpus_sentences = pickle.load(fp)
+print(f"[+] Loaded sentences list.\t({time.time()-start_time:.3f}s)")
 
-corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
+start_time = time.time()
+# corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
+print(f"[+] Loaded corpus_embeddings.\t({time.time()-start_time:.3f}s)")
 
+start_time = time.time()
 model_name = 'quora-distilbert-multilingual'
 model = SentenceTransformer(model_name)
+print(f"[+] Loaded model.\t\t({time.time()-start_time:.3f}s)")
 
+start_time = time.time()
 with open ('question_answer.json', 'r') as fp:
 	chatbot_qa = json.load(fp)
+print(f"[+] Loaded Question-Answers.\t({time.time()-start_time:.3f}s)")
 
+start_time = time.time()
 cb_questions = list(chatbot_qa.keys())
 qa_embedding = model.encode(cb_questions, show_progress_bar=True, convert_to_tensor=True)#.cuda()
+print(f"[+] Encoded Questions.\t\t({time.time()-start_time:.3f}s)")
 
 app = Flask(__name__)
 
@@ -89,7 +99,7 @@ def post_question():
 			corpus_sentences.append(query)
 			return redirect(url_for('view', qid=len(corpus_sentences)-1, posted=True))
 
-	return render_template("post_questions.html")
+	return render_template("post_question.html")
 
 	
 @app.route('/chat')
@@ -97,10 +107,10 @@ def chat():
 	return render_template("chatbot.html")
 
 
-@app.route('/chatbot')
+@app.route('/chatbot', methods=['POST'])
 def chatbot():
 	resp = {}
-	query = request.args.get('q')
+	query = request.get_json().get('q')
 	if query:
 		hits = search_question(query, qa_embedding)
 		hit = hits[0]  # best response
