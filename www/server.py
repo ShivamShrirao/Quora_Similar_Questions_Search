@@ -81,6 +81,10 @@ def view(qid):
 	time_taken = end_time-start_time
 	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", view_page=True)	# skip first as it is same as question in db.
 
+@app.route('/chat')
+def chat():
+	return render_template("chatbot.html")
+
 
 @app.route('/chatbot')
 def chatbot():
