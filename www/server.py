@@ -16,7 +16,7 @@ with open (DATASET_DIR + 'corpus_sentences.list', 'rb') as fp:
 print(f"[+] Loaded sentences list.\t({time.time()-start_time:.3f}s)")
 
 start_time = time.time()
-# corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
+corpus_embeddings = torch.load(DATASET_DIR+'corpus_embeddings.pt')#.cuda()
 print(f"[+] Loaded corpus_embeddings.\t({time.time()-start_time:.3f}s)")
 
 start_time = time.time()
