@@ -84,16 +84,16 @@ function send(ele) {
         ele.value = "";
         if (msg.length > 0) {
             set_user_msg(msg);
+            var params = {q: msg}
+            url.search = new URLSearchParams(params).toString();
+            var resp = fetch(url)
+                        .then(data => {return data.json();})
+                        .then(res  => {
+                            console.log(res);
+                            set_bot_msg(res["answer"]);
+                            window.scrollTo(0,document.body.scrollHeight);
+                        });
         }
-        var params = {q: msg}
-        url.search = new URLSearchParams(params).toString();
-        var resp = fetch(url)
-                    .then(data => {return data.json();})
-                    .then(res  => {
-                        console.log(res);
-                        set_bot_msg(res["answer"]);
-                        window.scrollTo(0,document.body.scrollHeight);
-                    });
     }
 }
 
