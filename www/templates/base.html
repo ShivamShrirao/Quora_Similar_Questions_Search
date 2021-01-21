@@ -78,8 +78,9 @@
         </div>
       </nav>
       {% if messages %}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
           {% for message in messages %}
-              <script>M.toast({html: '{{message}}', classes: 'w3-theme-red rounded', displayLength: 10000});</script>
+              <script>M.toast({html: '{{message}}', classes: 'rounded', displayLength: 5000});</script>
           {% endfor %}
       {% endif %}
       <div class="w3-row-padding w3-stretch w3-padding w3-margin" style="margin-top: 45px!important">

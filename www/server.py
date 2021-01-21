@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, request, render_template, url_for
+from flask import Flask, request, render_template, url_for, redirect
 from sentence_transformers import SentenceTransformer, util
 import torch
 import numpy as np
@@ -65,7 +65,10 @@ def search():
 
 
 @app.route('/view/<qid>')
-def view(qid, view_page=True, q_posted=False):
+def view(qid, view_page=True):
+	messages = False
+	if bool(request.args.get('posted')):
+		messages = ["Question has been posted."]
 	start_time = time.time()
 	try:
 		query = corpus_sentences[int(qid)]
@@ -76,11 +79,7 @@ def view(qid, view_page=True, q_posted=False):
 	end_time = time.time()
 	time_taken = end_time-start_time
 	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}",
-							view_page=view_page, q_posted=q_posted)	 # skip first resp as it is same as question in db.
-
-@app.route('/q_posted/<qid>')
-def q_posted(qid):
-	return view(qid, q_posted=True)
+							view_page=view_page, messages=messages)	 # skip first resp as it is same as question in db.
 
 @app.route('/post_question', methods=['POST', 'GET'])
 def post_question():
@@ -88,7 +87,7 @@ def post_question():
 		query = request.form.get('question')
 		if query:
 			corpus_sentences.append(query)
-			return q_posted(len(corpus_sentences)-1)
+			return redirect(url_for('view', qid=len(corpus_sentences)-1, posted=True))
 
 	return render_template("post_questions.html")
 
