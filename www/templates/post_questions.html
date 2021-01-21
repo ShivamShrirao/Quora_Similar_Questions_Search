@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<style type="text/css">
+		#questionarea {
+			border:3px solid #ccc;
+			box-shadow: none;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function() {
+			$("#chat_iframe").height("50%");
+		}
+	</script>
+	<br><br>
+	<h1><b>Enter your Question here:</b></h1>
+	<form method="post" action="/post_question">
+		<div>
+			<textarea name="question" id="questionarea" class="tile form-control input-lg" autofocus rows="4" cols="30" placeholder="Hey....do you have Something to ask?"></textarea>
+		</div>
+		<br>
+		<button type="submit">Post Question</button>
+	</form>
+{% endblock %}

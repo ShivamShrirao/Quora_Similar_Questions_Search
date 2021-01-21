@@ -56,20 +56,16 @@ def get_resp_dicts(query):
 def search():
 	start_time = time.time()
 	resp = []
-	query = None
-	try:
-		query = request.args['q']
-		if query:
-			resp = get_resp_dicts(query)
-	except KeyError:
-		pass
+	query = request.args.get('q')
+	if query:
+		resp = get_resp_dicts(query)
 	end_time = time.time()
 	time_taken = end_time-start_time
 	return render_template("search.html", resp=resp, query=query, time_taken=f"{time_taken:.4f}")
 
 
 @app.route('/view/<qid>')
-def view(qid):
+def view(qid, view_page=True, q_posted=False):
 	start_time = time.time()
 	try:
 		query = corpus_sentences[int(qid)]
@@ -79,8 +75,24 @@ def view(qid):
 		resp = []
 	end_time = time.time()
 	time_taken = end_time-start_time
-	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", view_page=True)	# skip first as it is same as question in db.
+	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}",
+							view_page=view_page, q_posted=q_posted)	 # skip first resp as it is same as question in db.
 
+@app.route('/q_posted/<qid>')
+def q_posted(qid):
+	return view(qid, q_posted=True)
+
+@app.route('/post_question', methods=['POST', 'GET'])
+def post_question():
+	if request.method == 'POST':
+		query = request.form.get('question')
+		if query:
+			corpus_sentences.append(query)
+			return q_posted(len(corpus_sentences)-1)
+
+	return render_template("post_questions.html")
+
+	
 @app.route('/chat')
 def chat():
 	return render_template("chatbot.html")
@@ -89,24 +101,23 @@ def chat():
 @app.route('/chatbot')
 def chatbot():
 	resp = {}
-	query = None
-	try:
-		query = request.args['q']
-		if query:
-			hits = search_question(query, qa_embedding)
-			hit = hits[0]  # best response
-			resp = {
-					"answer": "Sorry, I did not get your question. Can you please be more specific?",
-					"similar": cb_questions[hit['corpus_id']],
-					"score": f"{hit['score']:.3f}",
-					}
-			if hit['score'] > 0.85:
-				resp["answer"] = chatbot_qa[cb_questions[hit['corpus_id']]]
+	query = request.args.get('q')
+	if query:
+		hits = search_question(query, qa_embedding)
+		hit = hits[0]  # best response
+		resp = {
+				"answer": "Sorry, I did not get your question. Can you please be more specific?",
+				"similar": cb_questions[hit['corpus_id']],
+				"score": f"{hit['score']:.3f}",
+				}
+		if hit['score'] > 0.85:
+			resp["answer"] = chatbot_qa[cb_questions[hit['corpus_id']]]
 
-	except KeyError:
-		pass
 	return json.dumps(resp)
 
+
+'''
+'''
 
 if __name__ == '__main__':
 	app.run(debug=False)

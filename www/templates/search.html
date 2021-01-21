@@ -15,6 +15,16 @@
 		<hr class="solid">
 		<b>Related Questions</b>
 		<hr class="solid">
+	{% elif q_posted %}
+		<hr class="solid">
+		Question has been posted
+		<hr class="solid">
+		<br>
+		<br>
+		<br>
+		<hr class="solid">
+		<b>Related Questions</b>
+		<hr class="solid">
 	{% else %}
 		<br>
 		<hr class="solid">
@@ -29,4 +39,12 @@
 		{% endwith %}
 		<br>
 	{% endfor %}
+	{% if not view_page %}
+		<br>
+		<br>
+		<br>
+		<hr class="solid">
+		<a href="/post_question">Question not here? Post your question.</a>
+		<br>
+	{% endif %}
 {% endblock %}
