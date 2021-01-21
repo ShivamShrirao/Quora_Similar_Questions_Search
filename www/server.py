@@ -119,7 +119,7 @@ def chatbot():
 				"similar": cb_questions[hit['corpus_id']],
 				"score": f"{hit['score']:.3f}",
 				}
-		if hit['score'] > 0.85:
+		if hit['score'] > 0.80:
 			resp["answer"] = chatbot_qa[cb_questions[hit['corpus_id']]]
 
 	return json.dumps(resp)

@@ -1,11 +1,20 @@
 {
-    "What is the forum for?": "This is a forum to answer question related to various subjects.",
+    "What is the site for?": "This is a site to find and ask answers for question related to various subjects.",
     "Hello": "Hello! How can I help you today?",
+    "Can you help me": "How can I help you?",
+    "I am stuck": "How can I help you?",
+    "What can you do?": "I can answer your questions about this site.",
     "I am fine.": "That's good to hear.",
-    "Who are you?": "I am an assistant bot which can answer your questions about this forum",
-    "What is special about this forum?": "The special thing about this forum is that it uses NLP to prevent redundant questions, even if it is in a different language.",
+    "Thank you": "You are Welcome. 😊",
+    "thanks": "Glad to be of service. 😊",
+    "This is good bot.": "Thank you, My creator worked very hard on me. 😃",
+    "Bad bot": "I'm sorry. It seems my creator needs to do more work on me. 😅",
+    "Who are you?": "I am an assistant bot which can answer your questions about this site. I can also understand many languages.",
+    "What is special about this site?": "The special thing about this site is that it uses NLP to prevent redundant questions, even if it is in a different language.",
     "How does the site find similar question?": "We use BERT to compare and find questions that are similar.",
     "What is BERT?": "Bidirectional Encoder Representations or BERT is a from Transformers is a Transformer-based machine learning technique for natural language processing pre-training developed by Google.",
     "How can I post questions on this blog?": "You can first, search for your question on the blog. We will compare similar questions and will show you the answers for the same.",
-    "What if my question doesn't exist?": "In the search results page, you will find an option to post your own question at the bottom. From there, you'll be led to a page where you can post your questions."	
+    "What if my question doesn't exist?": "In the search results page, you will find an option to post your own question at the bottom. From there, you'll be led to a page where you can post your questions.",
+    "how many languages you understand": "I can understand 50+ languages, you can talk to me in most major languages. Although, my replies will only be in English. 😅",
+    "Who is your creator": "I am also looking for my creator, Do you know my creator?"
 }
