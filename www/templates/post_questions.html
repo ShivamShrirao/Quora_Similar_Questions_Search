@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<style type="text/css">
+      #questionarea
+      {
+        border:1px solid #ccc;
+      }
+    </style>
+	<br><br><br><br><br><br>
+	<h1><b>Enter your Question here:</b></h1>
+	<form method="get" action="/post_question">
+		<div>
+		<textarea name="q" id="questionarea" rows="4" cols="30">
+Hey....do you have Something to ask?
+		</textarea>
+	  	</div>
+		<input type="submit" value="Post Question">
+
+	</form>
+  <!-- <script src="{{ url_for('static', filename='js/app.js')}}"></script> -->
+{% endblock %}

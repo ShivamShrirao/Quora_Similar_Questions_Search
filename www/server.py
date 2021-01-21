@@ -81,6 +81,46 @@ def view(qid):
 	time_taken = end_time-start_time
 	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", view_page=True)	# skip first as it is same as question in db.
 
+@app.route('/q_posted/<qid>')
+def q_posted(qid):
+	start_time = time.time()
+	try:
+		query = corpus_sentences[int(qid)]
+		resp = get_resp_dicts(query)
+	except IndexError:
+		query = ""
+		resp = []
+	end_time = time.time()
+	time_taken = end_time-start_time
+	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", q_posted=True)	# skip first as it is same as question in db.
+
+@app.route('/post_question')
+def post_question():
+	query = request.args.get('q')
+	if query is not None:
+		corpus_sentences.append(query)
+		return q_posted(len(corpus_sentences)-1)
+		
+	return render_template("post_questions.html")	# skip first as it is same as question in db.
+'''
+def post_question():
+	start_time = time.time()
+	try:
+		query = corpus_sentences[int(qid)]
+		resp = get_resp_dicts(query)
+	except IndexError:
+		query = ""
+		resp = []
+	end_time = time.time()
+	time_taken = end_time-start_time
+	return render_template("search.html", resp=resp[1:], query=query, time_taken=f"{time_taken:.4f}", q_posted=True)	# skip first as it is same as question in db.
+'''
+	
+	
+@app.route('/chat')
+def chat():
+	return render_template("chatbot.html")
+
 
 @app.route('/chatbot')
 def chatbot():
@@ -96,12 +136,15 @@ def chatbot():
 					"similar": cb_questions[hit['corpus_id']],
 					"score": f"{hit['score']:.3f}",
 					}
-			if hit['score'] > 0.90:
+			if hit['score'] > 0.85:
 				resp["answer"] = chatbot_qa[cb_questions[hit['corpus_id']]]
 
 	except KeyError:
 		pass
 	return json.dumps(resp)
+	
+'''
+'''
 
 
 if __name__ == '__main__':
