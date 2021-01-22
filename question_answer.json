@@ -12,6 +12,7 @@
     "Who are you?": "I am an assistant bot which can answer your questions about this site. I can also understand many languages.",
     "What is special about this site?": "The special thing about this site is that it uses NLP to prevent redundant questions, even if it is in a different language.",
     "How does the site find similar question?": "We use BERT to compare and find questions that are similar.",
+    "How does the site work?": "We use BERT to compare and find questions that are similar.",
     "What is BERT?": "Bidirectional Encoder Representations or BERT is a from Transformers is a Transformer-based machine learning technique for natural language processing pre-training developed by Google.",
     "How can I post questions on this blog?": "You can first, search for your question on the blog. We will compare similar questions and will show you the answers for the same.",
     "What if my question doesn't exist?": "In the search results page, you will find an option to post your own question at the bottom. From there, you'll be led to a page where you can post your questions.",
